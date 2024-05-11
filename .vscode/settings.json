@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "at32a403a_wk_config.h": "c",
+        "rtthread.h": "c"
+    }
+}

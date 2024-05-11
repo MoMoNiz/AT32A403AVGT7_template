@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+    <MCUInfo>
+        <MCUSerials>AT32A403A</MCUSerials>
+        <MCUName>AT32A403AVGT7</MCUName>
+        <MCUPackage>LQFP100</MCUPackage>
+    </MCUInfo>
+    <CRM>
+        <Mode>
+            <ModeSub name="HEXT" value="HEXT-External-Oscillator"/>
+            <ModeSub name="LEXT" value="LEXT-External-Oscillator"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="HEXT" value="HEXT_CRYSTAL"/>
+            <ParametersSub name="LEXT" value="LEXT_CRYSTAL"/>
+        </Parameters>
+    </CRM>
+    <DEBUG>
+        <Mode>
+            <ModeSub name="Debug interface" value="SWD"/>
+        </Mode>
+    </DEBUG>
+    <USART1>
+        <Mode>
+            <ModeSub name="Mode" value="Asynchronous"/>
+        </Mode>
+    </USART1>
+    <USART2>
+        <Mode>
+            <ModeSub name="Mode" value="Asynchronous"/>
+        </Mode>
+    </USART2>
+    <DMA>
+        <USART1_RX>
+            <ParametersSub name="Instance" value="DMA1_Channel1"/>
+        </USART1_RX>
+        <USART1_TX>
+            <ParametersSub name="Instance" value="DMA1_Channel2"/>
+        </USART1_TX>
+    </DMA>
+    <NVIC>
+        <ShowType>0</ShowType>
+        <SysTick_Handler>1;0;0</SysTick_Handler>
+        <FLASH_IRQHandler>0;0;0</FLASH_IRQHandler>
+        <CRM_IRQHandler>0;0;0</CRM_IRQHandler>
+        <DMA1_Channel1_IRQHandler>0;14;0</DMA1_Channel1_IRQHandler>
+        <DMA1_Channel2_IRQHandler>0;14;0</DMA1_Channel2_IRQHandler>
+        <USART1_IRQHandler>1;14;0</USART1_IRQHandler>
+        <USART2_IRQHandler>0;15;0</USART2_IRQHandler>
+    </NVIC>
+    <GPIO>
+        <Signal SignalName="GPIO_Output" PinName="PD13">
+            <Parameters name="Label" value="LED1"/>
+        </Signal>
+        <Signal SignalName="GPIO_Output" PinName="PD14">
+            <Parameters name="Label" value="LED2"/>
+        </Signal>
+        <Signal SignalName="GPIO_Output" PinName="PD15">
+            <Parameters name="Label" value="LED3"/>
+        </Signal>
+    </GPIO>
+    <ClockConfiguration>
+        <rtcsel>1</rtcsel>
+        <hext>8.000000</hext>
+        <hextdiv>2</hextdiv>
+        <pllhextdiv>0</pllhextdiv>
+        <pllrcs>0</pllrcs>
+        <pllmult>25</pllmult>
+        <sclkselect>1</sclkselect>
+        <ahbdiv>1</ahbdiv>
+        <apb1div>2</apb1div>
+        <apb2div>2</apb2div>
+        <usbdiv>4.0</usbdiv>
+        <hicktousb>1</hicktousb>
+        <hicktosclk>0</hicktosclk>
+        <clkout>0</clkout>
+        <clkoutdiv>1</clkoutdiv>
+        <adcdiv>6</adcdiv>
+    </ClockConfiguration>
+    <PINInfo>
+        <PinSub pinname="PC14" signalname="CRM_LEXT_IN" signaltype="2"/>
+        <PinSub pinname="PC15" signalname="CRM_LEXT_OUT" signaltype="2"/>
+        <PinSub pinname="HEXT_IN" signalname="CRM_HEXT_IN" signaltype="2"/>
+        <PinSub pinname="HEXT_OUT" signalname="CRM_HEXT_OUT" signaltype="2"/>
+        <PinSub pinname="PA2" signalname="USART2_TX" signaltype="2"/>
+        <PinSub pinname="PA3" signalname="USART2_RX" signaltype="2"/>
+        <PinSub pinname="PD13" signalname="GPIO_Output" signaltype="3"/>
+        <PinSub pinname="PD14" signalname="GPIO_Output" signaltype="3"/>
+        <PinSub pinname="PD15" signalname="GPIO_Output" signaltype="3"/>
+        <PinSub pinname="PA9" signalname="USART1_TX" signaltype="2"/>
+        <PinSub pinname="PA10" signalname="USART1_RX" signaltype="2"/>
+        <PinSub pinname="PA13" signalname="DEBUG_JTMS_SWDIO" signaltype="2"/>
+        <PinSub pinname="PA14" signalname="DEBUG_JTCK_SWCLK" signaltype="2"/>
+    </PINInfo>
+    <ProjectInfomation>
+        <ProjectName>AT32A403AVGT7_WorkBench</ProjectName>
+        <ProjectLocation>D:/MoMo/DeskTop/AT32/AT32A403AVGT7_template/WorkBench</ProjectLocation>
+        <ToolchainIDE>MDK_V5</ToolchainIDE>
+        <KeepUserCode>true</KeepUserCode>
+        <MinHeapSize>0x200</MinHeapSize>
+        <MinStackSize>0x400</MinStackSize>
+        <UseFirmware>true</UseFirmware>
+        <PackageVersion>V2.0.3</PackageVersion>
+    </ProjectInfomation>
+</Root>
