@@ -18,7 +18,7 @@ cpu_usage_t *cpu_usage_obj(void)
 	return &_usage;
 }
 
-// ¶¨Ê±Æ÷³¬Ê±º¯Êı
+// å®šæ—¶å™¨è¶…æ—¶å‡½æ•°
 static void timeout(void *param)
 {
 	cpu_usage_t *obj = param;
@@ -41,29 +41,29 @@ static void timeout(void *param)
 
 int cpu_usage_init(void)
 {
-	cpu_usage_t *obj = cpu_usage_obj(); // ¶¨Ê±Æ÷³¬Ê±º¯ÊıµÄÈë¿Ú²ÎÊı
-	rt_timer_t t = &obj->time;					// ¶¨Ê±Æ÷¾ä±ú,Ö¸ÏòÒª³õÊ¼»¯µÄ¶¨Ê±Æ÷¿ØÖÆ¿é
+	cpu_usage_t *obj = cpu_usage_obj(); // å®šæ—¶å™¨è¶…æ—¶å‡½æ•°çš„å…¥å£å‚æ•°
+	rt_timer_t t = &obj->time;					// å®šæ—¶å™¨å¥æŸ„,æŒ‡å‘è¦åˆå§‹åŒ–çš„å®šæ—¶å™¨æ§åˆ¶å—
 	//char idle_name[RT_NAME_MAX];
 	int i = 0;
 
 	if (rt_object_get_type(&t->parent) != RT_Object_Class_Timer)
 	{
-		/* ´´½¨¾²Ì¬¶¨Ê±Æ÷ usage */
-		rt_timer_init(t, "usage", timeout, obj, 1,								// ³¬Ê±Ê±¼ä1¸öÊ±ÖÓ½ÚÅÄ
-				RT_TIMER_FLAG_PERIODIC | RT_TIMER_FLAG_HARD_TIMER);		// ÖÜÆÚ¶¨Ê± + Ó²¼ş¶¨Ê±Æ÷
-		/* ÉèÖÃCPUÊıÁ¿ */
+		/* åˆ›å»ºé™æ€å®šæ—¶å™¨ usage */
+		rt_timer_init(t, "usage", timeout, obj, 1,								// è¶…æ—¶æ—¶é—´1ä¸ªæ—¶é’ŸèŠ‚æ‹
+				RT_TIMER_FLAG_PERIODIC | RT_TIMER_FLAG_HARD_TIMER);		// å‘¨æœŸå®šæ—¶ + ç¡¬ä»¶å®šæ—¶å™¨
+		/* è®¾ç½®CPUæ•°é‡ */
 		obj->cpus = sizeof(obj->idle_stat) / sizeof(obj->idle_stat[0]);
-		/* »ñÈ¡¿ÕÏĞÏß³Ì¾ä±ú */
+		/* è·å–ç©ºé—²çº¿ç¨‹å¥æŸ„ */
 		obj->idle_stat[i].tid = rt_thread_find("tidle");
 //		for (i = 0; i < obj->cpus; i++)
 //		{
-//			rt_snprintf(idle_name, sizeof(idle_name), "tidle%d", i); // Ïò»º³åÇøÌî³ä¸ñÊ½»¯µÄ×Ö·û´®
+//			rt_snprintf(idle_name, sizeof(idle_name), "tidle%d", i); // å‘ç¼“å†²åŒºå¡«å……æ ¼å¼åŒ–çš„å­—ç¬¦ä¸²
 //			obj->idle_stat[i].tid = rt_thread_find(idle_name);
 //		}
 		/* set flags */
 		obj->state = CPU_USAGE_STATE_ACTIVATED;
 		/* start */
-		rt_timer_start(t);// Æô¶¯¶¨Ê±Æ÷
+		rt_timer_start(t);// å¯åŠ¨å®šæ—¶å™¨
 	}
 	return 0;
 }

@@ -202,6 +202,9 @@ void wk_periph_clock_config(void)
   /* enable gpioa periph clock */
   crm_periph_clock_enable(CRM_GPIOA_PERIPH_CLOCK, TRUE);
 
+  /* enable gpiob periph clock */
+  crm_periph_clock_enable(CRM_GPIOB_PERIPH_CLOCK, TRUE);
+
   /* enable gpioc periph clock */
   crm_periph_clock_enable(CRM_GPIOC_PERIPH_CLOCK, TRUE);
 
@@ -211,8 +214,14 @@ void wk_periph_clock_config(void)
   /* enable usart1 periph clock */
   crm_periph_clock_enable(CRM_USART1_PERIPH_CLOCK, TRUE);
 
+  /* enable tmr14 periph clock */
+  crm_periph_clock_enable(CRM_TMR14_PERIPH_CLOCK, TRUE);
+
   /* enable usart2 periph clock */
   crm_periph_clock_enable(CRM_USART2_PERIPH_CLOCK, TRUE);
+
+  /* enable can1 periph clock */
+  crm_periph_clock_enable(CRM_CAN1_PERIPH_CLOCK, TRUE);
 }
 
 /**
@@ -236,7 +245,12 @@ void wk_nvic_config(void)
   nvic_priority_group_config(NVIC_PRIORITY_GROUP_4);
 
   nvic_irq_enable(SysTick_IRQn, 0, 0);
+  nvic_irq_enable(USBFS_H_CAN1_TX_IRQn, 1, 0);
+  nvic_irq_enable(USBFS_L_CAN1_RX0_IRQn, 1, 0);
+  nvic_irq_enable(CAN1_RX1_IRQn, 1, 0);
+  nvic_irq_enable(CAN1_SE_IRQn, 1, 0);
   nvic_irq_enable(USART1_IRQn, 14, 0);
+  nvic_irq_enable(TMR8_TRG_HALL_TMR14_IRQn, 1, 0);
 }
 
 /**
@@ -380,6 +394,134 @@ void wk_usart2_init(void)
   /* add user code begin usart2_init 2 */
 
   /* add user code end usart2_init 2 */
+}
+
+/**
+  * @brief  init tmr14 function.
+  * @param  none
+  * @retval none
+  */
+void wk_tmr14_init(void)
+{
+  /* add user code begin tmr14_init 0 */
+
+  /* add user code end tmr14_init 0 */
+
+  /* add user code begin tmr14_init 1 */
+
+  /* add user code end tmr14_init 1 */
+
+  /* configure counter settings */
+  tmr_base_init(TMR14, 999, 199);
+  tmr_cnt_dir_set(TMR14, TMR_COUNT_UP);
+  tmr_clock_source_div_set(TMR14, TMR_CLOCK_DIV1);
+  tmr_period_buffer_enable(TMR14, FALSE);
+
+  /* configure overflow event */
+  tmr_overflow_request_source_set(TMR14, TRUE);
+
+  tmr_counter_enable(TMR14, TRUE);
+
+  /**
+   * Users need to configure TMR14 interrupt functions according to the actual application.
+   * 1. Call the below function to enable the corresponding TMR14 interrupt.
+   *     --tmr_interrupt_enable(...)
+   * 2. Add the user's interrupt handler code into the below function in the at32a403a_int.c file.
+   *     --void TMR8_TRG_HALL_TMR14_IRQHandler(void)
+   */
+
+  /* add user code begin tmr14_init 2 */
+
+  /* add user code end tmr14_init 2 */
+}
+
+/**
+  * @brief  init can1 function.
+  * @param  none
+  * @retval none
+  */
+void wk_can1_init(void)
+{
+  /* add user code begin can1_init 0 */
+
+  /* add user code end can1_init 0 */
+  
+  gpio_init_type gpio_init_struct;
+  can_base_type can_base_struct;
+  can_baudrate_type can_baudrate_struct;
+  /* add user code begin can1_init 1 */
+
+  /* add user code end can1_init 1 */
+  
+  /*gpio-----------------------------------------------------------------------------*/ 
+  gpio_default_para_init(&gpio_init_struct);
+
+  /* configure the CAN1 TX pin */
+  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
+  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+  gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
+  gpio_init_struct.gpio_pins = GPIO_PINS_9;
+  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+  gpio_init(GPIOB, &gpio_init_struct);
+
+  /* configure the CAN1 RX pin */
+  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_STRONGER;
+  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+  gpio_init_struct.gpio_mode = GPIO_MODE_INPUT;
+  gpio_init_struct.gpio_pins = GPIO_PINS_8;
+  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+  gpio_init(GPIOB, &gpio_init_struct);
+
+  /* GPIO PIN remap */
+  gpio_pin_remap_config(CAN1_GMUX_0010, TRUE); 
+
+  /*can_base_init--------------------------------------------------------------------*/ 
+  can_default_para_init(&can_base_struct);
+  can_base_struct.mode_selection = CAN_MODE_COMMUNICATE;
+  can_base_struct.ttc_enable = FALSE;
+  can_base_struct.aebo_enable = TRUE;
+  can_base_struct.aed_enable = TRUE;
+  can_base_struct.prsf_enable = FALSE;
+  can_base_struct.mdrsel_selection = CAN_DISCARDING_FIRST_RECEIVED;
+  can_base_struct.mmssr_selection = CAN_SENDING_BY_REQUEST;
+
+  can_base_init(CAN1, &can_base_struct);
+
+  /*can_baudrate_setting-------------------------------------------------------------*/ 
+  /*set baudrate = pclk/(baudrate_div *(1 + bts1_size + bts2_size))------------------*/ 
+  can_baudrate_struct.baudrate_div = 100;                       /*value: 1~0xFFF*/
+  can_baudrate_struct.rsaw_size = CAN_RSAW_1TQ;                /*value: 1~4*/
+  can_baudrate_struct.bts1_size = CAN_BTS1_6TQ;                /*value: 1~16*/
+  can_baudrate_struct.bts2_size = CAN_BTS2_1TQ;                /*value: 1~8*/
+  can_baudrate_set(CAN1, &can_baudrate_struct);
+
+  /**
+   * Users need to configure CAN1 interrupt functions according to the actual application.
+   * 1. Call the below function to enable the corresponding CAN1 interrupt.
+   *     --can_interrupt_enable(...)
+   * 2. Add the user's interrupt handler code into the below function in the at32a403a_int.c file.
+   *     --void USBFS_H_CAN1_TX_IRQHandler(void)
+   *     --void USBFS_L_CAN1_RX0_IRQHandler(void)
+   *     --void CAN1_RX1_IRQHandler(void)
+   *     --void CAN1_SE_IRQHandler(void)
+   */
+
+  /*can1 rx0 interrupt config--------------------------------------------------------*/ 
+  //can_interrupt_enable(CAN1, CAN_RF0MIEN_INT, TRUE);
+
+  /*can1 rx1 interrupt config--------------------------------------------------------*/ 
+  //can_interrupt_enable(CAN1, CAN_RF1MIEN_INT, TRUE);
+
+  /*can1 se interrupt config---------------------------------------------------------*/ 
+  //can_interrupt_enable(CAN1, CAN_ETRIEN_INT, TRUE);
+  //can_interrupt_enable(CAN1, CAN_EOIEN_INT, TRUE);
+
+  /*can1 tx interrupt config---------------------------------------------------------*/ 
+  //can_interrupt_enable(CAN1, CAN_TCIEN_INT, TRUE);
+
+  /* add user code begin can1_init 2 */
+
+  /* add user code end can1_init 2 */
 }
 
 /**

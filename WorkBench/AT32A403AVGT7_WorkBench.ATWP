@@ -5,6 +5,21 @@
         <MCUName>AT32A403AVGT7</MCUName>
         <MCUPackage>LQFP100</MCUPackage>
     </MCUInfo>
+    <CAN1>
+        <Mode>
+            <ModeSub name="CAN_Activate" value="TRUE"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="BaudRate" value="125"/>
+            <ParametersSub name="Sample_Point" value="87.5"/>
+            <ParametersSub name="BaudRate_Division" value="100"/>
+            <ParametersSub name="BTS1" value="CAN_BTS1_6TQ"/>
+            <ParametersSub name="BTS2" value="CAN_BTS2_1TQ"/>
+            <ParametersSub name="RSAW" value="CAN_RSAW_1TQ"/>
+            <ParametersSub name="Transmit_Sequence_Rule" value="CAN_SENDING_BY_REQUEST"/>
+            <ParametersSub name="Filter_0_Enable" value="FALSE"/>
+        </Parameters>
+    </CAN1>
     <CRM>
         <Mode>
             <ModeSub name="HEXT" value="HEXT-External-Oscillator"/>
@@ -20,6 +35,16 @@
             <ModeSub name="Debug interface" value="SWD"/>
         </Mode>
     </DEBUG>
+    <TMR14>
+        <Mode>
+            <ModeSub name="Activated" value="TRUE"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="DividerValue" value="199"/>
+            <ParametersSub name="Period" value="999"/>
+            <ParametersSub name="Overflow_Event" value="From_C"/>
+        </Parameters>
+    </TMR14>
     <USART1>
         <Mode>
             <ModeSub name="Mode" value="Asynchronous"/>
@@ -45,8 +70,13 @@
         <CRM_IRQHandler>0;0;0</CRM_IRQHandler>
         <DMA1_Channel1_IRQHandler>0;14;0</DMA1_Channel1_IRQHandler>
         <DMA1_Channel2_IRQHandler>0;14;0</DMA1_Channel2_IRQHandler>
+        <USBFS_H_CAN1_TX_IRQHandler>1;1;0</USBFS_H_CAN1_TX_IRQHandler>
+        <USBFS_L_CAN1_RX0_IRQHandler>1;1;0</USBFS_L_CAN1_RX0_IRQHandler>
+        <CAN1_RX1_IRQHandler>1;1;0</CAN1_RX1_IRQHandler>
+        <CAN1_SE_IRQHandler>1;1;0</CAN1_SE_IRQHandler>
         <USART1_IRQHandler>1;14;0</USART1_IRQHandler>
         <USART2_IRQHandler>0;15;0</USART2_IRQHandler>
+        <TMR8_TRG_HALL_TMR14_IRQHandler>1;1;0</TMR8_TRG_HALL_TMR14_IRQHandler>
     </NVIC>
     <GPIO>
         <Signal SignalName="GPIO_Output" PinName="PD13">
@@ -91,10 +121,12 @@
         <PinSub pinname="PA10" signalname="USART1_RX" signaltype="2"/>
         <PinSub pinname="PA13" signalname="DEBUG_JTMS_SWDIO" signaltype="2"/>
         <PinSub pinname="PA14" signalname="DEBUG_JTCK_SWCLK" signaltype="2"/>
+        <PinSub pinname="PB8" signalname="CAN1_RX" signaltype="2"/>
+        <PinSub pinname="PB9" signalname="CAN1_TX" signaltype="2"/>
     </PINInfo>
     <ProjectInfomation>
         <ProjectName>AT32A403AVGT7_WorkBench</ProjectName>
-        <ProjectLocation>D:/MoMo/DeskTop/AT32/AT32A403AVGT7_template/WorkBench</ProjectLocation>
+        <ProjectLocation>C:/Users/shanggyc/Desktop/AT32/AT32A403AVGT7_template/WorkBench</ProjectLocation>
         <ToolchainIDE>MDK_V5</ToolchainIDE>
         <KeepUserCode>true</KeepUserCode>
         <MinHeapSize>0x200</MinHeapSize>

@@ -30,6 +30,7 @@
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
 #include "dma_uart.h"
+#include "CO_app_AT32.h"
 /* add user code end private includes */
 
 /* private typedef -----------------------------------------------------------*/
@@ -180,13 +181,33 @@ void DebugMon_Handler(void)
 void USART1_IRQHandler(void)
 {
   /* add user code begin USART1_IRQ 0 */
-	UART_Receive_Interrupt(&Uart1);
+	UART_Receive_Interrupt(&Uart1);// 串口接收中断
   /* add user code end USART1_IRQ 0 */
   /* add user code begin USART1_IRQ 1 */
 
   /* add user code end USART1_IRQ 1 */
 }
 
+/**
+  * @brief  this function handles TMR8 Trigger and hall and TMR14 handler.
+  * @param  none
+  * @retval none
+  */
+void TMR8_TRG_HALL_TMR14_IRQHandler(void)
+{
+  /* add user code begin TMR8_TRG_HALL_TMR14_IRQ 0 */
+	if(tmr_flag_get (TMR14, TMR_OVF_FLAG) == SET) 
+	{
+		canopen_app_interrupt(); //CANopen 1ms定时中断
+		
+		tmr_flag_clear(TMR14, TMR_OVF_FLAG);
+	}
+  
+  /* add user code end TMR8_TRG_HALL_TMR14_IRQ 0 */
+  /* add user code begin TMR8_TRG_HALL_TMR14_IRQ 1 */
+
+  /* add user code end TMR8_TRG_HALL_TMR14_IRQ 1 */
+}
 /* add user code begin 1 */
 
 /* add user code end 1 */

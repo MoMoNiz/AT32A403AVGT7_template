@@ -82,11 +82,17 @@ extern "C" {
   /* init gpio function. */
   void wk_gpio_config(void);
 
+  /* init can1 function. */
+  void wk_can1_init(void);
+
   /* init usart1 function. */
   void wk_usart1_init(void);
 
   /* init usart2 function. */
   void wk_usart2_init(void);
+
+  /* init tmr14 function. */
+  void wk_tmr14_init(void);
 
   /* init dma1 channel1 */
   void wk_dma1_channel1_init(void);

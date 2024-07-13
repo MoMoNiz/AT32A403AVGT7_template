@@ -15,6 +15,8 @@
 #include "dma_uart.h"
 #include "cpu_usage.h"
 
+#include "CO_app_AT32.h"
+
 #define _SCB_BASE       (0xE000E010UL)
 #define _SYSTICK_CTRL   (*(rt_uint32_t *)(_SCB_BASE + 0x0))
 #define _SYSTICK_LOAD   (*(rt_uint32_t *)(_SCB_BASE + 0x4))
@@ -24,8 +26,8 @@
 
 
 #if defined(RT_USING_USER_MAIN) && defined(RT_USING_HEAP)
-#define RT_HEAP_SIZE 1024
-static uint32_t rt_heap[RT_HEAP_SIZE];     // heap default size: 4K(1024 * 4)
+#define RT_HEAP_SIZE 8192
+static uint32_t rt_heap[RT_HEAP_SIZE];     // heap default size: 4K(2048 * 4)
 RT_WEAK void *rt_heap_begin_get(void)
 {
     return rt_heap;
@@ -88,6 +90,12 @@ void rt_hw_board_init()
 
 	/* init usart2 function. */
   wk_usart2_init();
+	
+	/* init tmr14 function. */
+  wk_tmr14_init();
+	
+	/* init can1 function. */
+  wk_can1_init();
 	
   /* init gpio function. */
   wk_gpio_config();

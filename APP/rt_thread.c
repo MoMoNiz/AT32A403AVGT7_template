@@ -4,11 +4,14 @@
 #include "dma_uart.h"
 #include "test_demo.h"
 
+#include "CO_app_AT32.h"
+#include "OD.h"
+
 #define THREAD_PRIORITY 3			// 优先级
 #define THREAD_TIMESLICE 10  	// 时间片
 
 ALIGN(RT_ALIGN_SIZE)
-static char thread1_stack[1024];
+static char thread1_stack[1096];
 static struct rt_thread thread1;
 
 static char thread2_stack[1024];
@@ -17,13 +20,17 @@ static struct rt_thread thread2;
 /* 线程1 的入口函数*/
 static void thread1_entry(void *parameter)
 {
-	dsp_test_demo();
+	CANopenNodeAT32 canOpenNodeAT32;
+  canOpenNodeAT32.CANHandle = CAN1;
+  canOpenNodeAT32.HWInitFunction = wk_can1_init;
+  canOpenNodeAT32.timerHandle = TMR14;
+  canOpenNodeAT32.desiredNodeID = 1;
+  canOpenNodeAT32.baudrate = 125;
+  canopen_app_init(&canOpenNodeAT32);
   while(1)
   {
-    gpio_bits_write(LED1_GPIO_PORT,LED1_PIN,TRUE);
-    rt_thread_mdelay(100);
-    gpio_bits_write(LED1_GPIO_PORT,LED1_PIN,FALSE);
-    rt_thread_mdelay(100);
+		canopen_app_process();// CANopen进程
+		rt_thread_mdelay(1);
   }
 }
 
@@ -65,7 +72,8 @@ int thread_init(void)
 	return 0;
 }
 
-
+/* finsh组件用的串口收发函数
+***********************************************************************************************************/
 /**
 * @brief      finsh 输出一个字符,系统函数,函数名不可更改
 * @param      

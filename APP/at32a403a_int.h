@@ -66,7 +66,12 @@ void DebugMon_Handler(void);
 void PendSV_Handler(void);
 void SysTick_Handler(void);
 
+void USBFS_H_CAN1_TX_IRQHandler(void);
+void USBFS_L_CAN1_RX0_IRQHandler(void);
+void CAN1_RX1_IRQHandler(void);
+void CAN1_SE_IRQHandler(void);
 void USART1_IRQHandler(void);
+void TMR8_TRG_HALL_TMR14_IRQHandler(void);
 /* add user code begin exported functions */
 
 /* add user code end exported functions */

@@ -622,10 +622,10 @@ ARM Macro Assembler    Page 10
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp.sp --apcs=
 interwork --depend=.\objects\startup_at32a403a.d -o.\objects\startup_at32a403a.
-o -ID:\software\MDK\Arm\Packs\ArteryTek\AT32A403A_DFP\2.0.5\Device\Include --pr
-edefine="__UVISION_VERSION SETA 536" --predefine="AT32A403AVGT7 SETA 1" --list=
-.\listings\startup_at32a403a.lst ..\Drivers\CMSIS\cm4\device_support\startup\md
-k\startup_at32a403a.s
+o -ID:\Software\Keil_v5\Local\Arm\Packs\ArteryTek\AT32A403A_DFP\2.0.5\Device\In
+clude -ID:\Software\Keil_v5\ARM\CMSIS\Include --predefine="__UVISION_VERSION SE
+TA 532" --predefine="AT32A403AVGT7 SETA 1" --list=.\listings\startup_at32a403a.
+lst ..\Drivers\CMSIS\cm4\device_support\startup\mdk\startup_at32a403a.s
 
 
 

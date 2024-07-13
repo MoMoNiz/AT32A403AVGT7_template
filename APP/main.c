@@ -68,6 +68,7 @@ int main(void)
   while(1)
   {
     /* add user code begin 3 */
+    
     //rt_kprintf("hello\r\n");
 		//UART_Printf(&Uart1,"hellohellohello\r\n");
 		//UART_Printf(&Uart1,"worldworldworld\r\n");
